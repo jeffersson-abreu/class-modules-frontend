@@ -1,12 +1,24 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import { AuthProvider, ThemeProvider, ModulesProvider } from './contexts';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import reportWebVitals from './reportWebVitals';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastThemed } from './theme/toast';
+import { GlobalStyle } from './theme';
+import ReactDOM from 'react-dom';
+import AppRoutes from './routes';
+import React from 'react';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <AuthProvider>
+      <ThemeProvider>
+        <ToastThemed />
+        <GlobalStyle />
+        <ModulesProvider>
+          <AppRoutes />
+        </ModulesProvider>
+      </ThemeProvider>
+    </AuthProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
