@@ -111,6 +111,7 @@ const AddEditModules = () => {
               onFocus={() => formRef.current.setFieldError('description', null)}
               placeholder='Descrição do módulo'
               name='description'
+              cols={40}
               rows={2}
             />
             <Button

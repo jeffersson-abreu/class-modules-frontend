@@ -47,6 +47,6 @@ export const isStringEmpty = (str) => {
 
 // sleep.ts
 export function sleep(ms = 2000) {
-  console.log('Kindly remember to remove `sleep`');
+  console.log('----- Kindly remember to remove network delay -----');
   return new Promise((resolve) => setTimeout(resolve, ms));
 }

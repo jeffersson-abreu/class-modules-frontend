@@ -15,6 +15,11 @@ const InputWrapper = styled('div')`
   border-radius: 12px;
   transition: border .3s;
 
+  input[type="date"]::-webkit-inner-spin-button,
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+  }
   
   &:hover {
     border: 1px solid ${({ isInvalid, theme }) => isInvalid ? theme.error : theme.secondary};

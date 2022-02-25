@@ -36,8 +36,9 @@ const schema = yup.object().shape({
     .max(2048, 'Maxímo 2048 caracteres')
     .required('Insira a descrição da aula'),
 
-  duration: yup.string()
-    .test('is-empty', 'Insira a duração da aula', isStringEmpty)
+  duration: yup.number()
+    .typeError('Deve ser um número')
+    .min(1, 'Insira a duração da aula')
     .required('Insira a duração da aula'),
 
   date: yup.string()

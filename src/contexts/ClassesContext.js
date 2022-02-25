@@ -1,4 +1,5 @@
 import React, { createContext, useState } from 'react';
+import { useModules } from '../hooks';
 import { api } from '../utils';
 
 
@@ -14,6 +15,8 @@ export const ClassesContext = createContext({
 export const ClassesProvider = ({ children }) => {
   const [classes, setClasses] = useState([]);
 
+  const { get_modules } = useModules();
+
   const get_module_classes = async (module) => {
     const response = await api.get(`/modules/${module}/classes`);
     response && (setClasses(response.data))
@@ -22,19 +25,19 @@ export const ClassesProvider = ({ children }) => {
 
   const delete_class = async (module, _class) => {
     const response = await api.delete(`/class/${_class}`);
-    response && (await get_module_classes(module))
+    response && (await get_module_classes(module)) && await get_modules();
     return response;
   };
 
   const update_class = async (module, _class, data) => {
     const response = await api.patch(`/class/${_class}`, data);
-    response && (await get_module_classes(module))
+    response && (await get_module_classes(module)) && await get_modules()
     return response;
   };
 
   const create_class = async (module, data) => {
     const response = await api.post('/class', data);
-    response && (await get_module_classes(module))
+    response && (await get_module_classes(module)) && await get_modules()
     return response;
   };
 

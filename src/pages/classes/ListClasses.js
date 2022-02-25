@@ -162,7 +162,7 @@ const ListClasses = () => {
             <IconWrapper>
               <IconWrapper>
                 <MdOndemandVideo color={theme.secondary} size={35} />
-                <IconLabel>{module.classes} Aulas</IconLabel>
+                <IconLabel>{classes.length} Aulas</IconLabel>
               </IconWrapper>
 
               <IconWrapper>

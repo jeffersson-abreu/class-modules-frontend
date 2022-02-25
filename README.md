@@ -1,70 +1,56 @@
-# Getting Started with Create React App
+# Catálogo de aulas por módulos
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este é um desafio para a vaga Fullstack na Verzel. Abaixo segue o passo-a-passo para avaliação, instalação e uso do fontend.
 
-## Available Scripts
+## Requisitos
 
-In the project directory, you can run:
+- [Backend da aplicação](https://github.com/jeffersson-abreu/class-modules-backend)
+- [Node](https://nodejs.org/pt-br/download/) ***v16.13.2***
+- [Git](https://git-scm.com/downloads)
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Você pode obter o node e o npm usando o [nvm](https://pip.pypa.io/en/stable/) (Node version manager) seguindo a [documentação](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+## Instalação
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Após a instalação e configuração do [backend](https://github.com/jeffersson-abreu/class-modules-backend) da aplicação, com o backend rodando e aceitando conexões, poderemos dar inicio a  instalação do front-end para avaliação.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+# Download do projeto
+$ git clone https://github.com/jeffersson-abreu/class-modules-frontend.git
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# Instalando as dependências
+$ cd class-modules-frontend
+$ npm install
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Após a instalação das dependências, poderemos rodar o projeto.
+```bash
+$ npm start
+```
 
-### `npm run eject`
+Agora nossa aplicação está pronta para fazer requisições locais ao nosso backend. Abaixo estão as operações suportadas. O layout das páginas é auto explicativo.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Modulos
+- Listagem
+- Criação
+- Remoção
+- Edição
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Aulas
+- Listagem
+- Criação
+- Remoção
+- Edição
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+As rotas de criação, remoção, e edição de ambos são protegidas para usuários não autenticados, tanto no back-end quanto no front-end. Antes de fazer qualquer operação nessas rotas protegidas é obrigatório fazer login na área administrativa. 
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Caso não tenha uma conta você poderá criar uma atrávés da área administrativa seguindo o link "Cadastre-se" no rodapé do formulário.
 
-## Learn More
+Após o login ou criação da conta você poderá adicionar, remover e editar módulos e aulas facilmente.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Considerações Finais
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+O design não está totalmente completo. Desconsidere animações e efeitos de fluídez no front-end. No mais, agradeço pelo tempo energia disponibilizados para avaliação deste desafio.
