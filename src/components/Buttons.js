@@ -1,8 +1,9 @@
 import { TailSpin } from 'react-loader-spinner';
 import { BsMoon, BsSun } from 'react-icons/bs';
+import { IconWrapper } from './ModuleCard';
 import styled from 'styled-components';
-import { IconWrapper } from './Cards';
 import { useTheme } from '../hooks';
+import { hexToRGBA } from '../utils';
 
 
 export const ButtonWrapper = styled('button')`
@@ -11,7 +12,7 @@ export const ButtonWrapper = styled('button')`
   border: 1px solid ${({ theme }) => theme.secondary};
   border-radius: ${({ rounded }) => rounded || 10}px;
   transition: background-color, color, .3s;
-  height: ${({ height }) => height || 48}px;
+  height: ${({ height }) => height || '48px'};
   width: ${({ width }) => width || 'auto'};
   text-decoration: none;
   justify-content: center;
@@ -30,13 +31,15 @@ export const ButtonWrapper = styled('button')`
   margin-top: ${({ mt }) => mt || 0}px;
 
   &:hover {
-    background: ${({ theme, outline }) => outline ? theme.secondary : 'transparent'};
-    color: ${({ theme, outline }) => outline ? theme.quaternary : theme.secondary};
+    border: 1px solid ${({ theme }) => hexToRGBA(theme.secondary, .8)};
+    background: ${({ theme }) => hexToRGBA(theme.secondary, .8)};
+    color: ${({ theme }) => theme.quaternary};
   };
 
   &:active {
-    background: ${({ theme, outline }) => outline ? theme.secondary : 'transparent'};
-    color: ${({ theme, outline }) => outline ? theme.quaternary : theme.secondary};
+    border: 1px solid ${({ theme }) => hexToRGBA(theme.secondary, .5)};
+    background: ${({ theme }) => hexToRGBA(theme.secondary, .5)};
+    color: ${({ theme }) => theme.quaternary};
   }
 `;
 
@@ -44,23 +47,35 @@ export const ButtonText = styled('p')`
   font-weight: ${({ weight }) => weight || 600};
   font-size: ${({ fs }) => fs || 16}px;
   font-family: Nunito;
+  margin-right: 5px;
   cursor: default;
   display: flex;
 `;
 
 
-export const Button = ({ loading, type, text, weight, outline, fs, to, ...rest }) => {
+export const Button = ({
+  loading,
+  outline,
+  weight,
+  width,
+  type,
+  text,
+  fs,
+  to,
+  ...rest
+}) => {
+
+  const { theme } = useTheme();
 
   return (
-    <ButtonWrapper outline={outline} {...rest}>
+    <ButtonWrapper width={width} outline={outline} {...rest}>
       <ButtonText weight={weight} fs={fs}>
         {text}
       </ButtonText>
       {loading && (
         <TailSpin
-          style={{ marginLeft: 10 }}
+          color={theme.quaternary}
           ariaLabel='loading'
-          color='#777777'
           height="16"
           width="16"
         />
@@ -70,7 +85,7 @@ export const Button = ({ loading, type, text, weight, outline, fs, to, ...rest }
 }
 
 export const ThemeToggle = () => {
-  const { isDarkTheme, theme, toggleTheme } = useTheme();
+  const { isDarkTheme, toggleTheme } = useTheme();
 
   return (
     <IconWrapper>
@@ -80,7 +95,6 @@ export const ThemeToggle = () => {
           :
           <BsMoon onClick={toggleTheme} size={23} />
       }
-
     </IconWrapper>
 
   )

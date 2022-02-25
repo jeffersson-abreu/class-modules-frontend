@@ -1,7 +1,8 @@
-import { isFormValid, isStringEmpty } from '../utils';
+import { isFormValid, isStringEmpty, sleep } from '../utils';
 import React, { useState, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useTheme, useAuth } from '../hooks';
+import { toast } from 'react-toastify';
 import * as yup from 'yup';
 
 import {
@@ -63,13 +64,26 @@ const Register = () => {
   }
 
   async function handleSubmit(data) {
-    setLoading(true);
+
+
     if (await isFormValid(data, formRef, schema)) {
-      register(data.username, data.password)
-        .then(() => {
-          setLoading(false);
-          navigate('/');
-        })
+      setLoading(true);
+
+      // Simulate a delay network
+      await sleep(1000);
+
+      if (await register(data.username, data.password)) {
+        toast.success("Conta criada com sucesso", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        navigate('/');
+      }
     }
     setLoading(false);
   }
@@ -85,7 +99,7 @@ const Register = () => {
           </div>
         </Col>
         <Col>
-          <Box>
+          <Box mt='3rem'>
             <ToggleWrapper>
               <ThemeToggle />
             </ToggleWrapper>
@@ -142,7 +156,7 @@ const Register = () => {
               />
               <Button height={58} type='submit' loading={loading} text='Entrar' weight={700} />
               <Typography.Small align='center' mt={20}>
-                Já possui uma conta ? <HighLight to='/login'>Entre agora</HighLight>
+                Já possui uma conta ? <HighLight onClick={() => navigate('/login')}>Entre agora</HighLight>
               </Typography.Small>
             </FormWrapper>
           </Box>

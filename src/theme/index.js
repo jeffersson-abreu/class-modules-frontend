@@ -19,16 +19,15 @@ export const darkTheme = {
 }
 
 
-
 export const GlobalStyle = createGlobalStyle`
   :root {
     --toastify-font-family: Nunito;
 
-    --toastify-color-light: #ff7563;
-    --toastify-color-dark: #ff7563;
+    --toastify-color-light: #434343;
+    --toastify-color-dark: #434343;
 
-    --toastify-text-color-light: #f4f4f4;
-    --toastify-text-color-dark: #f4f4f4;
+    --toastify-text-color-light: #FFF;
+    --toastify-text-color-dark: #FFF;
   }
 
   font-family: Nunito;

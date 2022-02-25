@@ -109,16 +109,19 @@ export const AuthProvider = ({ children }) => {
       username
     });
 
+    if (response) {
+      const { user, token } = response.data;
+      localStorage.setItem('token', token)
 
-    const { user, token } = response.data;
-    localStorage.setItem('token', token)
+      dispatch({
+        type: 'login',
+        payload: {
+          user
+        }
+      });
+    }
 
-    dispatch({
-      type: 'login',
-      payload: {
-        user
-      }
-    });
+    return response;
   };
 
   // Handle user registration
@@ -128,15 +131,19 @@ export const AuthProvider = ({ children }) => {
       password,
     });
 
-    const { user, token } = response.data;
-    await localStorage.setItem('token', token)
+    if (response) {
+      const { user, token } = response.data;
+      localStorage.setItem('token', token)
 
-    dispatch({
-      type: 'register',
-      payload: {
-        user
-      }
-    });
+      dispatch({
+        type: 'register',
+        payload: {
+          user
+        }
+      });
+    }
+
+    return response;
   };
 
   // Handle user logout

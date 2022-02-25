@@ -1,4 +1,4 @@
-import { AuthProvider, ThemeProvider, ModulesProvider } from './contexts';
+import { AuthProvider, ThemeProvider, ModulesProvider, ClassesProvider } from './contexts';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import reportWebVitals from './reportWebVitals';
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,7 +15,9 @@ ReactDOM.render(
         <ToastThemed />
         <GlobalStyle />
         <ModulesProvider>
-          <AppRoutes />
+          <ClassesProvider>
+            <AppRoutes />
+          </ClassesProvider>
         </ModulesProvider>
       </ThemeProvider>
     </AuthProvider>

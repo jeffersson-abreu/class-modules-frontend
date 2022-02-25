@@ -11,11 +11,22 @@ export const CustomThemeContext = createContext({
 
 export const CustomThemeProvider = ({ children }) => {
 
-  const [isDarkTheme, setIsDarkTheme] = useState(true);
+  // Verify the system theme. Here we always start with the system theme
+  let isSystemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+  // The user preference is most important thing so we override 
+  // the system theme and start with the user theme like
+  const userPreference = localStorage.getItem('theme');
+  if (userPreference !== null) {
+    isSystemDark = userPreference === 'dark' ? true : false;
+  }
+
+  const [isDarkTheme, setIsDarkTheme] = useState(isSystemDark);
   const [theme, setTheme] = useState(lightTheme);
 
   useEffect(() => {
-    setTheme(isDarkTheme ? darkTheme : lightTheme)
+    setTheme(isDarkTheme ? darkTheme : lightTheme);
+    localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
   }, [isDarkTheme])
 
   // Switch dark mode state

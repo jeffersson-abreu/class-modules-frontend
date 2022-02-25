@@ -1,9 +1,9 @@
 import { AiOutlineLogout } from 'react-icons/ai';
 import { Button, ThemeToggle } from './Buttons';
 import { useNavigate } from "react-router-dom";
-import { useAuth, useTheme } from '../hooks';
+import { IconWrapper } from './ModuleCard';
 import styled from 'styled-components';
-import { IconWrapper } from './Cards';
+import { useAuth } from '../hooks';
 import React from 'react';
 
 
@@ -29,7 +29,6 @@ export const Topbar = ({ children }) => {
 
   const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
-  const { theme } = useTheme();
 
   function handleLoginClick() {
     navigate('/login');

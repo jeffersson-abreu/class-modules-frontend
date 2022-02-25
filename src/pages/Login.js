@@ -1,7 +1,8 @@
-import { useModules, useTheme, useAuth } from '../hooks';
-import { isFormValid, isStringEmpty } from '../utils';
+import { isFormValid, isStringEmpty, sleep } from '../utils';
 import React, { useState, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
+import { useTheme, useAuth } from '../hooks';
+import { toast } from 'react-toastify';
 import * as yup from 'yup';
 
 import {
@@ -39,13 +40,10 @@ const schema = yup.object().shape({
 })
 
 
-
 const Login = () => {
-
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const { modules } = useModules();
   const navigate = useNavigate();
   const { theme } = useTheme();
   const formRef = useRef(null);
@@ -56,15 +54,26 @@ const Login = () => {
   }
 
   async function handleSubmit(data) {
-    setLoading(true);
     if (await isFormValid(data, formRef, schema)) {
-      login(data.username, data.password)
-        .then(() => {
-          setLoading(false);
-          navigate('/');
-        })
+      setLoading(true);
+
+      // Simulate a network delay 
+      await sleep(1000);
+
+      if (await login(data.username, data.password)) {
+        toast.success("Autenticado com sucesso", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        navigate('/');
+      }
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   return (
@@ -78,11 +87,14 @@ const Login = () => {
           </div>
         </Col>
         <Col>
-          <Box>
+          <Box mt='5rem'>
             <ToggleWrapper>
               <ThemeToggle />
             </ToggleWrapper>
-            <FormWrapper ref={formRef} onSubmit={handleSubmit}>
+            <FormWrapper
+              onSubmit={handleSubmit}
+              ref={formRef}
+            >
               <Input
                 prependIcon={<AiOutlineUser size={22} color={theme.secondary} />}
                 onFocus={() => formRef.current.setFieldError('username', null)}
@@ -114,7 +126,7 @@ const Login = () => {
               />
               <Button height={58} type='submit' loading={loading} text='Entrar' weight={700} />
               <Typography.Small align='center' mt={20}>
-                Ainda não tem uma conta ? <HighLight to='/register'>Cadastre-se</HighLight>
+                Ainda não tem uma conta ? <HighLight onClick={() => navigate('/register')}>Cadastre-se</HighLight>
               </Typography.Small>
             </FormWrapper>
           </Box>

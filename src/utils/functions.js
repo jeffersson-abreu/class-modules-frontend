@@ -40,7 +40,13 @@ export async function isFormValid(data, formRef, schema) {
   }
 }
 
-
+// Validate strings
 export const isStringEmpty = (str) => {
   return str !== null && str !== '' && str !== undefined
+}
+
+// sleep.ts
+export function sleep(ms = 2000) {
+  console.log('Kindly remember to remove `sleep`');
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }

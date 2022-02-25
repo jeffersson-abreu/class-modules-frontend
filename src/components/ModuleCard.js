@@ -1,10 +1,12 @@
 import { ReactComponent as CardIcon } from '../assets/card-icon.svg';
+import { useTheme, useAuth, useModules } from '../hooks';
 import { AiOutlineFolderAdd } from 'react-icons/ai';
 import { FiTrash2, FiEdit } from 'react-icons/fi';
-import { useTheme, useAuth } from '../hooks';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
+import { Button, Typography } from '.';
 import { hexToRGBA } from '../utils';
-import { Button } from '.';
 import React from 'react';
 
 
@@ -13,17 +15,17 @@ const CardContainer = styled('div')`
   background-color: ${({ theme }) => theme.quaternary};
   flex-direction: column;
   border-radius: 16px;
-  margin-bottom: 20px;
-  max-width: 300px;
   padding: 16px;
   display: flex;
+  flex: 1;
+  
 
   @media(min-width: 768px) {
-    margin: 0px 20px 20px 0px;
+    margin: 10px;
   }
 `;
 
-const CardTitle = styled('p')`
+export const CardTitle = styled('p')`
   color: ${({ theme }) => theme.tertiary};
   font-family: Nunito;
   line-height: 24px;
@@ -46,7 +48,7 @@ const CardTitle = styled('p')`
   }
 `;
 
-const CardDescriptionSm = styled('p')`
+export const CardDescriptionSm = styled('p')`
   color: ${({ theme }) => theme.tertiary};
   font-family: Nunito;
   font-size: 12px;
@@ -60,7 +62,7 @@ const CardDescriptionSm = styled('p')`
   }
 `;
 
-const CardDescriptionMd = styled('p')`
+export const CardDescriptionMd = styled('p')`
   color: ${({ theme }) => theme.tertiary};
   font-family: Nunito;
   font-size: 14px;
@@ -104,13 +106,13 @@ export const IconWrapper = styled('div')`
 `;
 
 
-const CardRow = styled('div')`
+export const CardRow = styled('div')`
   flex-direcion: row;
   justify-content: ${({ justify }) => justify || 'flex-start'};
   display: flex;
 `;
 
-const Toolbar = styled('div')`
+export const Toolbar = styled('div')`
   justify-content: space-evenly;
   align-items: center;
   flex-direcion: row;
@@ -120,13 +122,46 @@ const Toolbar = styled('div')`
 `;
 
 
-export const ModuleCard = ({ id, name, description }) => {
+export const ModuleCard = ({ module }) => {
 
+  const { id, name, description } = module;
+
+  const { delete_module } = useModules();
   const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
   const { theme } = useTheme();
+
+  async function handleDeletion() {
+    if (await delete_module(id)) {
+      toast.success(`${name} removido!`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  }
+
+  function handleEdition() {
+    navigate('/modules/edit', { state: { module } })
+  }
+
+  function handleAddClass() {
+    navigate(`/modules/${id}/new-class`, { state: { module } })
+  }
+
+  function handleSeeClasses() {
+    navigate(`/modules/${id}`, { state: { module } })
+  }
 
   return (
     <CardContainer>
+      <CardRow>
+        <Typography.Small>{module.classes} Aulas</Typography.Small>
+      </CardRow>
       <CardRow>
         <Icon />
         <div>
@@ -140,26 +175,26 @@ export const ModuleCard = ({ id, name, description }) => {
           isAuthenticated && (
             <Toolbar>
               <IconWrapper>
-                <AiOutlineFolderAdd size={26} />
+                <AiOutlineFolderAdd size={22} onClick={handleAddClass} />
               </IconWrapper>
 
               <IconWrapper>
-                <FiEdit size={20} />
+                <FiEdit size={16} onClick={handleEdition} />
               </IconWrapper>
 
               <IconWrapper color={theme.error}>
-                <FiTrash2 size={20} />
+                <FiTrash2 size={16} onClick={handleDeletion} />
               </IconWrapper>
             </Toolbar>
           )
         }
 
-
         <Button
-          text='Saiba mais!'
+          text='Ver detalhes'
+          onClick={handleSeeClasses}
           weight={400}
           rounded={30}
-          height={30}
+          height='30px'
           width='50%'
           fs={12}
           mt={10}

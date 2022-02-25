@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { hexToRGBA } from '../utils';
-import { Link } from "react-router-dom";
 
 // Text bases
 const BaseText = styled('p')`
@@ -40,9 +39,9 @@ const SubTitle = styled(BaseText)`
 `;
 
 const Normal = styled(BaseText)`
+  font-weight: ${({ weight }) => weight || 300};
   font-family: 'Nunito';
   line-height: 24px;
-  font-weight: 300;
   font-size: 18px;
 
   @media(min-width: 768px) {
@@ -51,9 +50,9 @@ const Normal = styled(BaseText)`
 `;
 
 const Small = styled(BaseText)`
+  font-weight: ${({ weight }) => weight || 300};
   font-family: 'Nunito';
   line-height: 16px;
-  font-weight: 300;
   font-size: 13px;
 
   @media(min-width: 768px) {
@@ -61,11 +60,11 @@ const Small = styled(BaseText)`
   }
 `;
 
-export const HighLight = styled(Link)`
+export const HighLight = styled('span')`
   color: ${({ theme, color }) => color || theme.secondary};
+  font-weight: ${({ weight }) => weight || 800};
   transition: color, .3s;
   text-decoration: none;
-  font-weight: 800;
   cursor: default;
   padding: 0 5px;
 

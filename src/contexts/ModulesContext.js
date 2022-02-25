@@ -3,11 +3,10 @@ import { api } from '../utils';
 
 
 export const ModulesContext = createContext({
-  get_module_classes: () => { },
-  update_module: () => { },
-  delete_module: () => { },
-  create_module: () => { },
-  get_modules: () => { },
+  update_module: async () => { },
+  delete_module: async () => { },
+  create_module: async () => { },
+  get_modules: async () => { },
   modules: []
 });
 
@@ -25,30 +24,27 @@ export const ModulesProvider = ({ children }) => {
     get_modules();
   }, [])
 
-  const get_module_classes = async (module) => {
-    const response = await api.get(`/modules/${module}/classes`);
-    setModules(response.data);
-  };
-
 
   const delete_module = async (id) => {
-    await api.delete(`/module/${id}`);
-    await get_modules();
+    const response = await api.delete(`/modules/${id}`);
+    response && (await get_modules())
+    return response;
   };
 
   const update_module = async (id, data) => {
-    await api.patch(`/modules/${id}`, data);
-    await get_modules();
+    const response = await api.patch(`/modules/${id}`, data);
+    response && (await get_modules())
+    return response;
   };
 
   const create_module = async (data) => {
-    await api.patch(`/modules/`, data);
-    await get_modules();
+    const response = await api.post('/modules', data);
+    response && (await get_modules())
+    return response;
   };
 
   return (
     <ModulesContext.Provider value={{
-      get_module_classes,
       delete_module,
       create_module,
       update_module,

@@ -1,3 +1,8 @@
+import { useModules, useAuth } from '../../hooks';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import React from 'react';
+
 import {
   ContentBox,
   ModuleCard,
@@ -6,58 +11,51 @@ import {
   CoverBox,
   Button,
   Topbar,
-} from '../components';
-
-import styled from 'styled-components';
-import { useModules } from '../hooks';
-import { hexToRGBA } from '../utils';
-import React from 'react';
-
+} from '../../components';
 
 const Box = styled('div')`
-  display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  max-width: 700px;
+  display: flex;
   width: 100%;
+  gap: 20px;
 
   @media(min-width: 768px) {
-    width: 80%;
     display: block;
+    width: 80%;
   }
 
   @media(min-width: 1280px) {
-    width: 70%;
-  }
-
-  @media(min-width: 1366px) {
-    width: 50%;
+    width: 60%;
   }
 `;
 
-
-
-const Column = styled('div')`
+const Col = styled('div')`
   display inline-block;
-  max-width: 330px;
+  max-width: 400px;
   width: 100%;
 
   @media(min-width: 768px) {
+    display: inline-block;
     width: 50%;
   }
 `;
 
 
-const Modules = () => {
+const ListModules = () => {
 
+  const { isAuthenticated } = useAuth();
   const { modules } = useModules();
+  const navigate = useNavigate();
 
   return (
     <CoverBox>
       <Topbar>
         <Button
           text='Novo módulo'
-          onClick={() => { }}
+          onClick={() => navigate('/modules/new')}
           outline
           pr={30}
           pl={30}
@@ -75,7 +73,7 @@ const Modules = () => {
             Nossos módulos são organizados em ordem alfabética.
             Aqui, além de verificar os módulos você pode verificar
             todas as aulas relacionadas aos módulos.
-            <HighLight color='#3bd42d' to="/login">
+            <HighLight color='#3bd42d' onClick={() => navigate('/login')}>
               Acesse a área administrativa
             </HighLight>
             para inserir aulas ou módulos.
@@ -83,17 +81,34 @@ const Modules = () => {
         </Box>
         <Box>
           {
+            !modules.length && (
+              isAuthenticated ?
+                <Button
+                  text='Insira um módulo'
+                  onClick={() => navigate(`/modules/new`)}
+                  outline
+                  pr={30}
+                  pl={30}
+                />
+                :
+                <Typography.Normal weight={600}>
+                  Nenhum módulo encontrado.
+                </Typography.Normal>
+            )
+          }
+          {
             modules.map((module, index) => (
-              <Column key={index}>
-                <ModuleCard {...module} />
-              </Column>
+              <Col>
+                <ModuleCard key={index} module={module} />
+              </Col>
             ))
           }
         </Box>
+
       </ContentBox>
-    </CoverBox>
+    </CoverBox >
 
   )
 }
 
-export default Modules;
+export default ListModules;
